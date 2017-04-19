@@ -168,3 +168,68 @@ public int calculate(String s) {
     return res;
 }
 ```
+### 227. Basic Calculator II （加减乘除）
+
+**Description**
+
+Implement a basic calculator to evaluate a simple expression string.
+
+The expression string contains only non-negative integers, +, -, *, / operators and empty spaces . The integer division should truncate toward zero.
+
+You may assume that the given expression is always valid.
+
+Some examples:
+
+```
+"3+2*2" = 7
+" 3/2 " = 1
+" 3+5 / 2 " = 5
+```
+
+**Ideas**
+
+利用的stack的思想，但是可以不用stack来implement
+
+1. 遇到 + - 更新res；
+2. 遇到 * / 更新mem1 // 相当于stack
+3. 如果有 ^ 操作，还要再存一个数字mem2
+
+**Tag:**  math string stack
+
+```
+public int calculate(String s) {
+    if (s == null) return 0;
+    s = s.trim().replaceAll(" +", "");
+    int length = s.length();
+
+    int res = 0;
+    long preVal = 0; // initial preVal is 0
+    char sign = '+'; // initial sign is +
+    int i = 0;
+    while (i < length) {
+        long curVal = 0;
+        while (i < length && (int)s.charAt(i) <= 57 && (int)s.charAt(i) >= 48) { // int
+            curVal = curVal*10 + (s.charAt(i) - '0');
+            i++;
+        }
+        if (sign == '+') {
+            res += preVal;  // update res
+            preVal = curVal;
+        } else if (sign == '-') {
+            res += preVal;  // update res
+            preVal = -curVal;
+        } else if (sign == '*') {
+            preVal = preVal * curVal; // not update res, combine preVal & curVal and keep loop
+        } else if (sign == '/') {
+            preVal = preVal / curVal; // not update res, combine preVal & curVal and keep loop
+        }
+        if (i < length) { // getting new sign
+            sign = s.charAt(i);
+            i++;
+        }
+    }
+    // final update
+    res += preVal;
+    return res;
+}
+```
