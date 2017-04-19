@@ -40,6 +40,7 @@ You may assume that each input would have exactly one solution, and you may not 
 1. Sort + Two Pointer - Time: o(nlogn); Space: o(1)
 2. HashMap - Time: o(n); Space: o(n) 
 
+**Tag** hashMap, two pointer
 
 ```
 public class Solution {
@@ -67,7 +68,10 @@ Given an array S of n integers, are there elements a, b, c in S such that a + b 
 
 **Ideas**
 Sort + Two Pointer - Time: o(n^2); Space: o(1)
+
 先sort，之后调用two sum (two pointers) 
+
+**Tag** hashMap, two pointer
 
 ```
 public class Solution {
