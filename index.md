@@ -42,6 +42,7 @@ You may assume that each input would have exactly one solution, and you may not 
 
 
 ```
+`
 public class Solution {
     public int[] twoSum(int[] nums, int target) {
         int[] res = new int[2];
@@ -58,6 +59,7 @@ public class Solution {
         return res;
     }
 }
+`
 ```
 
 
