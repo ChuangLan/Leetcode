@@ -1,5 +1,7 @@
 ## Welcome to GitHub Pages
 
+[View website](https://chuanglan.github.io/Leetcode/)
+
 You can use the [editor on GitHub](https://github.com/ChuangLan/Leetcode/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
@@ -42,7 +44,7 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
-`
+```
 public class Solution {
     public int[] twoSum(int[] nums, int target) {
         int[] res = new int[2];
@@ -59,6 +61,6 @@ public class Solution {
         return res;
     }
 }
-`
+```
 
 
