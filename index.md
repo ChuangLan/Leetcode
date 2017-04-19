@@ -2,7 +2,9 @@
 
 [View website](https://chuanglan.github.io/Leetcode/)
 
-[Edit website](https://github.com/ChuangLan/Leetcode/edit/master/index.md)
+[View raw](https://github.com/ChuangLan/Leetcode/blob/master/index.md)
+
+[Edit raw](https://github.com/ChuangLan/Leetcode/edit/master/index.md)
 
 ### Markdown
 
