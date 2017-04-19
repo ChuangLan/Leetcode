@@ -29,6 +29,7 @@ Syntax highlighted code block
 ## Solutions
 
 ### 1. Two Sum
+
 **Description**
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
@@ -36,7 +37,8 @@ You may assume that each input would have exactly one solution, and you may not 
 **Ideas**
 1. Sort - Time: o(nlogn); Space: o(1)
 2. HashMap - Time: o(n); Space: o(n) 
-```markdown
+
+```
 public class Solution {
     public int[] twoSum(int[] nums, int target) {
         int[] res = new int[2];
