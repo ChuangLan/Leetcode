@@ -30,6 +30,26 @@ Syntax highlighted code block
 
 ## Solutions
 
+### 0. Template
+
+**Description**
+
+The description of this question
+
+**Ideas**
+
+Ideas, hints or keywords to the problem
+
+**Tag: ** template
+
+```
+public class Solution {
+    public void test(){
+        System.out.println("Hello World!");
+    }
+}
+```
+
 ### 1. Two Sum
 
 **Description**
@@ -40,7 +60,7 @@ You may assume that each input would have exactly one solution, and you may not 
 1. Sort + Two Pointer - Time: o(nlogn); Space: o(1)
 2. HashMap - Time: o(n); Space: o(n) 
 
-**Tag** hashMap, two pointer
+**Tag: ** hashMap, two pointer
 
 ```
 public class Solution {
@@ -71,7 +91,7 @@ Sort + Two Pointer - Time: o(n^2); Space: o(1)
 
 先sort，之后调用two sum (two pointers) 
 
-**Tag** hashMap, two pointer
+**Tag: ** hashMap, two pointer
 
 ```
 public class Solution {
