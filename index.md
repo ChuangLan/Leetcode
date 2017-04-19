@@ -40,7 +40,7 @@ The description of this question
 
 Ideas, hints or keywords to the problem
 
-**Tag: ** template
+**Tag:**  template
 
 ```
 public class Solution {
@@ -60,7 +60,7 @@ You may assume that each input would have exactly one solution, and you may not 
 1. Sort + Two Pointer - Time: o(nlogn); Space: o(1)
 2. HashMap - Time: o(n); Space: o(n) 
 
-**Tag: ** hashMap, two pointer
+**Tag:**  hashMap, two pointer
 
 ```
 public class Solution {
@@ -91,7 +91,7 @@ Sort + Two Pointer - Time: o(n^2); Space: o(1)
 
 先sort，之后调用two sum (two pointers) 
 
-**Tag: ** hashMap, two pointer
+**Tag:**  hashMap, two pointer
 
 ```
 public class Solution {
