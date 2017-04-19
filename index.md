@@ -38,6 +38,7 @@ You may assume that each input would have exactly one solution, and you may not 
 1. Sort - Time: o(nlogn); Space: o(1)
 2. HashMap - Time: o(n); Space: o(n) 
 
+
 ```
 public class Solution {
     public int[] twoSum(int[] nums, int target) {
