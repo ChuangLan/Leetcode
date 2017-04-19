@@ -37,7 +37,7 @@ Given an array of integers, return indices of the two numbers such that they add
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
 **Ideas**
-1. Sort - Time: o(nlogn); Space: o(1)
+1. Sort + Two Pointer - Time: o(nlogn); Space: o(1)
 2. HashMap - Time: o(n); Space: o(n) 
 
 
