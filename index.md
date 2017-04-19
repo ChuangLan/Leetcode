@@ -117,7 +117,7 @@ public class Solution {
 }
 ```
 
-### 224. Basic Calculator
+### 224. Basic Calculator （加减括号）
 
 **Description**
 
@@ -137,7 +137,7 @@ Some examples:
 
 **Ideas**
 
-Ideas, hints or keywords to the problem
+用Stack，res = 0 当结果 sign = 1 当符号，遇到数字和），更新res；遇到加减更新sign，遇到（把当前存到stack里，reset res 和 sign
 
 **Tag:**  stack math
 
