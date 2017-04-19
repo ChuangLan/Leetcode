@@ -35,3 +35,30 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+## Solutions
+
+### 1. Two Sum
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+`
+public class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int[] res = new int[2];
+        // if(nums == null || nums.length < 2) return res;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++){
+            if(map.containsKey(nums[i])){
+                res[0] = map.get(nums[i]);
+                res[1] = i;
+                break;
+            }
+            else map.put(target - nums[i], i);
+        }
+        return res;
+    }
+}
+`
+
+
