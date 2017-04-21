@@ -192,7 +192,6 @@ Some examples:
 
 1. 遇到 + - 更新res；
 2. 遇到 * / 更新mem1 // 相当于stack
-3. 如果有 ^ 操作，还要再存一个数字mem2
 
 **Tag:**  math string stack
 
@@ -231,5 +230,76 @@ public int calculate(String s) {
     // final update
     res += preVal;
     return res;
+}
+```
+
+### 467. Unique Substrings in Wraparound String 
+
+**Description**
+
+Consider the string s to be the infinite wraparound string of "abcdefghijklmnopqrstuvwxyz", so s will look like this: "...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcd....".
+
+Now we have another string p. Your job is to find out how many unique non-empty substrings of p are present in s. In particular, your input is the string p and you need to output the number of different non-empty substrings of p in the string s.
+
+Note: p consists of only lowercase English letters and the size of p might be over 10000.
+
+Some examples:
+
+```
+Input: "a"
+Output: 1
+
+Explanation: Only the substring "a" of string "a" is in the string s.
+
+Input: "cac"
+Output: 2
+Explanation: There are two substrings "a", "c" of string "cac" in the string s.
+
+Input: "zab"
+Output: 6
+Explanation: There are six substrings "z", "a", "b", "za", "ab", "zab" of string "zab" in the string s.
+
+```
+
+**Ideas**
+
+1. 用一个size为26的DP数组来存以某字母开头的最长substring大小
+2. for loop的时候，在每一段连续串结束之后，更新dp数组
+3. 由于每一个字母开头的最长substring大小，就是以这个字母开头的所有子串数量，所以res = sum(dp)
+
+**Tag:**  math string stack
+
+```
+public class Solution {
+    public int findSubstringInWraproundString(String p) {
+        if(p == null || p.length() == 0) return 0;
+        // the number of the len starting from a to z
+        int[] dp = new int[26];
+        int preLen = 1;
+        char last = p.charAt(0);
+        dp[last - 'a'] = 1;
+        // important i <= p.length(): make sure that the final one calulated
+        for(int i = 1; i <= p.length(); i++){
+            // ab, za
+            while(i < p.length() && (p.charAt(i) - p.charAt(i-1) == 1 || p.charAt(i) - p.charAt(i-1) == -25)){
+                // preLen plus 1
+                preLen++;
+                i++;
+            }                            
+            // update dp
+            for(int j = 0; j < preLen; j++){
+                int idx = (last - 'a' + j) % 26;
+                dp[idx] = Math.max(dp[idx], preLen - j);
+            }
+            // update curt
+            if(i < p.length()) {
+                last = p.charAt(i);
+                preLen = 1;
+            }
+        }
+        int res = 0;
+        for(int num : dp) res += num;
+        return res;
+    }
 }
 ```
