@@ -2,6 +2,80 @@
 
 # Pocket Gems
 
+### 133. Clone Graph
+
+**Description**
+
+Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
+
+```
+ 1
+      / \
+     /   \
+    0 --- 2
+         / \
+         \_/
+
+```
+
+**Ideas**
+
+1. DFS/BFS都能解
+2. 基本思路就是用一个map的key-value来link新老node
+3. 之后就是普通的搜索
+
+**Tag:**  bfs dfs POCKET GEMS
+
+```
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ *     int label;
+ *     List<UndirectedGraphNode> neighbors;
+ *     UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if(node == null) return null;
+        Map<UndirectedGraphNode, UndirectedGraphNode> map = new HashMap<>();
+        // bfs
+          Queue<UndirectedGraphNode> queue = new LinkedList<>();
+          queue.offer(node);
+          UndirectedGraphNode root = node;
+          while(queue.peek() != null){
+              node = queue.poll();
+              UndirectedGraphNode clone = new UndirectedGraphNode(node.label);
+              map.put(node, clone);
+              for(UndirectedGraphNode neighbor : node.neighbors){
+                  if(map.containsKey(neighbor)) continue;
+                  queue.offer(neighbor);
+              }
+          }
+          for(UndirectedGraphNode key : map.keySet()){
+              UndirectedGraphNode value = map.get(key);
+              for(UndirectedGraphNode neighbor : key.neighbors){
+                  value.neighbors.add(map.get(neighbor));
+              }
+          }
+          return map.get(root);
+        // bfs end
+        // return cloneHelper(node, map);
+    }
+    // DFS
+    // public UndirectedGraphNode cloneHelper(UndirectedGraphNode node, Map<UndirectedGraphNode, UndirectedGraphNode> map){
+    //     if(map.containsKey(node)) return map.get(node);
+    //     UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
+    //     map.put(node, newNode);
+    //     for(UndirectedGraphNode neighbor : node.neighbors){
+    //         UndirectedGraphNode temp = cloneHelper(neighbor, map);
+    //         newNode.neighbors.add(temp);
+    //     }
+    //     return newNode;
+    // }
+}
+```
+
 ### 139. Word Break
 
 **Description**
@@ -13,20 +87,6 @@ s = "leetcode",
 dict = ["leet", "code"].
 
 Return true because "leetcode" can be segmented as "leet code".
-
-```
-[
-  [3],
-  [1],
-  [2],
-  [1,2,3],
-  [1,3],
-  [2,3],
-  [1,2],
-  []
-]
-
-```
 
 **Ideas**
 
