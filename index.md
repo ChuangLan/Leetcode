@@ -2,6 +2,59 @@
 
 # Pocket Gems
 
+### 139. Word Break
+
+**Description**
+
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words. You may assume the dictionary does not contain duplicate words.
+
+For example, given
+s = "leetcode",
+dict = ["leet", "code"].
+
+Return true because "leetcode" can be segmented as "leet code".
+
+```
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+
+```
+
+**Ideas**
+
+1. 用一个boolean array 代表s每个idx之前是否能被word break
+2. 如果减掉当前word长度是true，并且substring和word一样，说明这个也是true
+3. 最后return dp[ls]
+
+**Tag:**  dp POCKET GEMS
+
+```
+public class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if(s == null || wordDict == null) return false;
+        int ls = s.length();
+        boolean[] dp = new boolean[ls+1];
+        dp[0] = true;
+        for(int i = 1; i <= ls; i++){
+            for(String word : wordDict){
+                if(word.length() <= i && dp[i - word.length()] && word.equals(s.substring(i - word.length(), i))){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[ls];
+    }
+}
+```
 ### 78. Subsets
 
 **Description**
