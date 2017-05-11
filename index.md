@@ -303,3 +303,57 @@ public class Solution {
     }
 }
 ```
+### 78. Subsets
+
+**Description**
+
+Given a set of distinct integers, nums, return all possible subsets.
+
+Note: The solution set must not contain duplicate subsets.
+
+For example,
+If nums = [1,2,3], a solution is:
+
+```
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+
+```
+
+**Ideas**
+
+1. 用bit manipulation
+2. 每一bit都代表这个元素是否在set里,如有，就加在这次的list里
+3. subset的总数就是2^n个
+
+**Tag:**  array backtracking bit manipulation
+
+```
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        // use bit manipulation to compute the result
+        // each bit is means
+        int size = 1 << nums.length;
+        List<List<Integer>> res = new ArrayList<>(size);
+        for(int i = 0; i < size; i++){
+            int mask = i, j = 0;
+            List<Integer> temp = new ArrayList<>();
+            while(mask > 0){
+                if((mask & 1) == 1) temp.add(nums[j]);
+                j++;
+                mask >>= 1;
+            }
+            res.add(temp);
+        }
+        return res;
+    }
+}
+```
