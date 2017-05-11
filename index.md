@@ -334,7 +334,7 @@ If nums = [1,2,3], a solution is:
 2. 每一bit都代表这个元素是否在set里,如有，就加在这次的list里
 3. subset的总数就是2^n个
 
-**Tag:**  array backtracking bit manipulation
+**Tag:**  array backtracking bit manipulation POCKET GEMS
 
 ```
 public class Solution {
@@ -357,3 +357,65 @@ public class Solution {
     }
 }
 ```
+
+### 90. Subsets II
+
+**Description**
+
+Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+
+Note: The solution set must not contain duplicate subsets.
+
+For example,
+If nums = [1,2,2], a solution is:
+
+```
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+```
+
+**Ideas**
+
+1. backtracking
+2. 处理重复: 如果add这个数，那后面照常，如果不，那后面一样的数字都别想
+3. 这样处理保证永远是第一个dup在使用
+
+
+**Tag:**  array backtracking POCKET GEMS
+
+```
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        recurse(res, temp, nums, 0);
+        return res;
+    }
+    
+    private void recurse(List<List<Integer>> res, List<Integer> temp, int[] nums, int idx){
+        // exit
+        if(idx == nums.length){
+            List<Integer> clone = new ArrayList<>(temp);
+            res.add(clone);
+            return;
+        }
+        // to add or not to add
+        // adding: backtracking
+        temp.add(nums[idx]);
+        recurse(res, temp, nums, ++idx);
+        temp.remove(temp.size() - 1);
+        // no adding
+        while(idx < nums.length && nums[idx-1] == nums[idx]) idx++;
+        recurse(res, temp, nums, idx);
+    }
+}
+```
+
+[Edit raw](https://github.com/ChuangLan/Leetcode/edit/master/index.md)
