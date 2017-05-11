@@ -1,33 +1,196 @@
-## Welcome to GitHub Pages
-
-[View website](https://chuanglan.github.io/Leetcode/)
-
-[View raw](https://github.com/ChuangLan/Leetcode/blob/master/index.md)
-
 [Edit raw](https://github.com/ChuangLan/Leetcode/edit/master/index.md)
 
-### Markdown
+# Pocket Gems
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### 78. Subsets
 
-```markdown
-Syntax highlighted code block
+**Description**
 
-# Header 1
-## Header 2
-### Header 3
+Given a set of distinct integers, nums, return all possible subsets.
 
-- Bulleted
-- List
+Note: The solution set must not contain duplicate subsets.
 
-1. Numbered
-2. List
+For example,
+If nums = [1,2,3], a solution is:
 
-**Bold** and _Italic_ and `Code` text
+```
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
 
-[Link](url) and ![Image](src)
 ```
 
+**Ideas**
+
+1. 用bit manipulation
+2. 每一bit都代表这个元素是否在set里,如有，就加在这次的list里
+3. subset的总数就是2^n个
+
+**Tag:**  array backtracking bit manipulation POCKET GEMS
+
+```
+public class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        // use bit manipulation to compute the result
+        // each bit is means
+        int size = 1 << nums.length;
+        List<List<Integer>> res = new ArrayList<>(size);
+        for(int i = 0; i < size; i++){
+            int mask = i, j = 0;
+            List<Integer> temp = new ArrayList<>();
+            while(mask > 0){
+                if((mask & 1) == 1) temp.add(nums[j]);
+                j++;
+                mask >>= 1;
+            }
+            res.add(temp);
+        }
+        return res;
+    }
+}
+```
+
+### 90. Subsets II
+
+**Description**
+
+Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+
+Note: The solution set must not contain duplicate subsets.
+
+For example,
+If nums = [1,2,2], a solution is:
+
+```
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+```
+
+**Ideas**
+
+1. backtracking
+2. 处理重复: 如果add这个数，那后面照常，如果不，那后面一样的数字都别想
+3. 这样处理保证永远是第一个dup在使用
+
+
+**Tag:**  array backtracking POCKET GEMS
+
+```
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        recurse(res, temp, nums, 0);
+        return res;
+    }
+    
+    private void recurse(List<List<Integer>> res, List<Integer> temp, int[] nums, int idx){
+        // exit
+        if(idx == nums.length){
+            List<Integer> clone = new ArrayList<>(temp);
+            res.add(clone);
+            return;
+        }
+        // to add or not to add
+        // adding: backtracking
+        temp.add(nums[idx]);
+        recurse(res, temp, nums, ++idx);
+        temp.remove(temp.size() - 1);
+        // no adding
+        while(idx < nums.length && nums[idx-1] == nums[idx]) idx++;
+        recurse(res, temp, nums, idx);
+    }
+}
+```
+
+
+### 10. Regular Expression Matching
+
+**Description**
+
+Implement regular expression matching with support for '.' and '*'.
+
+```
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+
+The matching should cover the entire input string (not partial).
+
+The function prototype should be:
+bool isMatch(const char *s, const char *p)
+
+Some examples:
+isMatch("aa","a") → false
+isMatch("aa","aa") → true
+isMatch("aaa","aa") → false
+isMatch("aa", "a*") → true
+isMatch("aa", ".*") → true
+isMatch("ab", ".*") → true
+isMatch("aab", "c*a*b") → true
+```
+
+**Ideas**
+
+1. DP
+2. 方法就是注释里面的状态转移方程
+
+
+**Tag:**  DP POCKET GEMS
+
+```
+// 1, If p.charAt(j) == s.charAt(i) :  dp[i][j] = dp[i-1][j-1];
+// 2, If p.charAt(j) == '.' : dp[i][j] = dp[i-1][j-1];
+// 3, If p.charAt(j) == '*': 
+//   here are two sub conditions:
+//               1   if p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  //in this case, a* only counts as empty
+//               2   if p.charAt(j-1) == s.charAt(i) or p.charAt(j-1) == '.':
+//                               dp[i][j] = dp[i-1][j]    //in this case, a* counts as multiple a 
+//                           or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
+//                           or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
+
+
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        int m = s.length(), n = p.length();
+        boolean[][] dp = new boolean[m+1][n+1];
+        // "" and "" match
+        dp[0][0] = true;
+        // assign all the "a*b*c*" match ""
+        for(int j = 1; j < n; j++){
+            if(p.charAt(j) == '*') dp[0][j+1] = dp[0][j-1];
+        }
+        // dp
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                int x = i+1, y = j+1;
+                if(p.charAt(j) == s.charAt(i) || p.charAt(j) == '.') dp[x][y] = dp[x-1][y-1];
+                if(p.charAt(j) == '*'){
+                    if(j == 0) return false;
+                    // check empty first
+                    dp[x][y] = dp[x][y-2];
+                    // then check whether it could be multiple
+                    if(p.charAt(j-1) == s.charAt(i) || p.charAt(j-1) == '.') dp[x][y] = dp[x][y] || dp[x-1][y];
+                }
+            }
+        }
+        return dp[m][n];
+    }
+}
+```
 ## Solutions
 
 ### 0. Template
@@ -303,196 +466,32 @@ public class Solution {
     }
 }
 ```
+## Welcome to GitHub Pages
 
-# Pocket Gems
+[View website](https://chuanglan.github.io/Leetcode/)
 
-### 78. Subsets
+[View raw](https://github.com/ChuangLan/Leetcode/blob/master/index.md)
 
-**Description**
-
-Given a set of distinct integers, nums, return all possible subsets.
-
-Note: The solution set must not contain duplicate subsets.
-
-For example,
-If nums = [1,2,3], a solution is:
-
-```
-[
-  [3],
-  [1],
-  [2],
-  [1,2,3],
-  [1,3],
-  [2,3],
-  [1,2],
-  []
-]
-
-```
-
-**Ideas**
-
-1. 用bit manipulation
-2. 每一bit都代表这个元素是否在set里,如有，就加在这次的list里
-3. subset的总数就是2^n个
-
-**Tag:**  array backtracking bit manipulation POCKET GEMS
-
-```
-public class Solution {
-    public List<List<Integer>> subsets(int[] nums) {
-        // use bit manipulation to compute the result
-        // each bit is means
-        int size = 1 << nums.length;
-        List<List<Integer>> res = new ArrayList<>(size);
-        for(int i = 0; i < size; i++){
-            int mask = i, j = 0;
-            List<Integer> temp = new ArrayList<>();
-            while(mask > 0){
-                if((mask & 1) == 1) temp.add(nums[j]);
-                j++;
-                mask >>= 1;
-            }
-            res.add(temp);
-        }
-        return res;
-    }
-}
-```
-
-### 90. Subsets II
-
-**Description**
-
-Given a collection of integers that might contain duplicates, nums, return all possible subsets.
-
-Note: The solution set must not contain duplicate subsets.
-
-For example,
-If nums = [1,2,2], a solution is:
-
-```
-[
-  [2],
-  [1],
-  [1,2,2],
-  [2,2],
-  [1,2],
-  []
-]
-```
-
-**Ideas**
-
-1. backtracking
-2. 处理重复: 如果add这个数，那后面照常，如果不，那后面一样的数字都别想
-3. 这样处理保证永远是第一个dup在使用
-
-
-**Tag:**  array backtracking POCKET GEMS
-
-```
-public class Solution {
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
-        List<List<Integer>> res = new ArrayList<>();
-        List<Integer> temp = new ArrayList<>();
-        recurse(res, temp, nums, 0);
-        return res;
-    }
-    
-    private void recurse(List<List<Integer>> res, List<Integer> temp, int[] nums, int idx){
-        // exit
-        if(idx == nums.length){
-            List<Integer> clone = new ArrayList<>(temp);
-            res.add(clone);
-            return;
-        }
-        // to add or not to add
-        // adding: backtracking
-        temp.add(nums[idx]);
-        recurse(res, temp, nums, ++idx);
-        temp.remove(temp.size() - 1);
-        // no adding
-        while(idx < nums.length && nums[idx-1] == nums[idx]) idx++;
-        recurse(res, temp, nums, idx);
-    }
-}
-```
-
-
-### 10. Regular Expression Matching
-
-**Description**
-
-Implement regular expression matching with support for '.' and '*'.
-
-```
-'.' Matches any single character.
-'*' Matches zero or more of the preceding element.
-
-The matching should cover the entire input string (not partial).
-
-The function prototype should be:
-bool isMatch(const char *s, const char *p)
-
-Some examples:
-isMatch("aa","a") → false
-isMatch("aa","aa") → true
-isMatch("aaa","aa") → false
-isMatch("aa", "a*") → true
-isMatch("aa", ".*") → true
-isMatch("ab", ".*") → true
-isMatch("aab", "c*a*b") → true
-```
-
-**Ideas**
-
-1. DP
-2. 方法就是注释里面的状态转移方程
-
-
-**Tag:**  DP POCKET GEMS
-
-```
-// 1, If p.charAt(j) == s.charAt(i) :  dp[i][j] = dp[i-1][j-1];
-// 2, If p.charAt(j) == '.' : dp[i][j] = dp[i-1][j-1];
-// 3, If p.charAt(j) == '*': 
-//   here are two sub conditions:
-//               1   if p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2]  //in this case, a* only counts as empty
-//               2   if p.charAt(j-1) == s.charAt(i) or p.charAt(j-1) == '.':
-//                               dp[i][j] = dp[i-1][j]    //in this case, a* counts as multiple a 
-//                           or dp[i][j] = dp[i][j-1]   // in this case, a* counts as single a
-//                           or dp[i][j] = dp[i][j-2]   // in this case, a* counts as empty
-
-
-public class Solution {
-    public boolean isMatch(String s, String p) {
-        int m = s.length(), n = p.length();
-        boolean[][] dp = new boolean[m+1][n+1];
-        // "" and "" match
-        dp[0][0] = true;
-        // assign all the "a*b*c*" match ""
-        for(int j = 1; j < n; j++){
-            if(p.charAt(j) == '*') dp[0][j+1] = dp[0][j-1];
-        }
-        // dp
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-                int x = i+1, y = j+1;
-                if(p.charAt(j) == s.charAt(i) || p.charAt(j) == '.') dp[x][y] = dp[x-1][y-1];
-                if(p.charAt(j) == '*'){
-                    if(j == 0) return false;
-                    // check empty first
-                    dp[x][y] = dp[x][y-2];
-                    // then check whether it could be multiple
-                    if(p.charAt(j-1) == s.charAt(i) || p.charAt(j-1) == '.') dp[x][y] = dp[x][y] || dp[x-1][y];
-                }
-            }
-        }
-        return dp[m][n];
-    }
-}
-```
 [Edit raw](https://github.com/ChuangLan/Leetcode/edit/master/index.md)
+
+### Markdown
+
+Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+
+```markdown
+Syntax highlighted code block
+
+# Header 1
+## Header 2
+### Header 3
+
+- Bulleted
+- List
+
+1. Numbered
+2. List
+
+**Bold** and _Italic_ and `Code` text
+
+[Link](url) and ![Image](src)
+```
