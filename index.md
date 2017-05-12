@@ -2,6 +2,81 @@
 
 # Pocket Gems
 
+### NAN Top View of Binary Tree 变种 of 314. Binary Tree Vertical Order Traversal
+
+**Description**
+314. Binary Tree Vertical Order Traversal
+Given a binary tree, return the first one of vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
+If two nodes are in the same row and column, the order should be from left to right.
+Examples:
+
+Given binary tree [3,9,20,null,null,15,7],
+```
+ 3
+  /\
+ /  \
+ 9  20
+    /\
+   /  \
+  15   7
+```
+return its vertical order traversal as:
+```
+[9, 3, 20, 7]
+```
+
+**Ideas**
+
+1. 先用computeRange求出min and max
+2. 之后再用bfs得到每个colum
+3. 用Integer[] 中的null 来代表没有访问过
+
+注： 如果是bottom view 也是bfs，但是保留最后一个，每次直接覆盖之前的就可以了
+
+**Tag:**  bfs-only POCKET GEMS
+
+```
+public class Solution{
+	int min = 0, max = 0;
+    public List<Integer> topView(TreeNode root){
+    	List<Integer> res = new ArrayList<>();
+    	if(root == null) return res;
+    	computeRange(root, 0);
+    	Integer[] array = new Integer[max - min + 1];
+    	Queue<TreeNode> queue = new LinkedList<>();
+    	Queue<Integer> cols = new LinkedList<>();
+        queue.offer(root);
+        cols.offer(-min);
+        while(queue.peek() != null){
+        	TreeNode node = queue.poll();
+        	int col = cols.poll();
+        	if(array[col] == null) array[col] = node.val;
+        	if(node.left != null){
+                queue.offer(node.left);
+                cols.offer(col - 1);
+            }
+            if(node.right != null){
+                queue.offer(node.right);
+                cols.offer(col + 1);
+            }
+        }
+        for(Integer val: array){
+        	res.add(val);
+        }
+    	return res;
+    }
+
+    private void computeRange(TreeNode root, int col){
+        if(root == null) return;
+        min = Math.min(min, col);
+        max = Math.max(max, col);
+        computeRange(root.left, col - 1);
+        computeRange(root.right, col + 1);
+    }
+}
+```
+
+
 ### 200. Number of Islands
 
 **Description**
