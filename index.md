@@ -2,6 +2,62 @@
 
 # Pocket Gems
 
+### 200. Number of Islands
+
+**Description**
+
+Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+Example 1:
+```
+11110
+11010
+11000
+00000
+```
+Answer: 1
+Example 2:
+```
+11000
+11000
+00100
+00011
+```
+Answer: 3
+
+**Ideas**
+
+1. DFS recursive解
+2. 遍历过的地方设为1，然后再遍历其他地方
+
+**Tag:**  bfs dfs union-find POCKET GEMS
+
+```
+public class Solution {
+    public int numIslands(char[][] grid) {
+        if(grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int rows = grid.length, cols = grid[0].length;
+        int res = 0;
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                res += helper(grid, i, j);
+            }
+        }
+        return res;
+    }
+    
+    private int helper(char[][]grid, int i, int j){
+        if(i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] == '0') return 0;
+        grid[i][j] = '0';
+        // this four will delete all the other neighbors
+        helper(grid, i-1, j);
+        helper(grid, i, j-1);
+        helper(grid, i+1, j);
+        helper(grid, i, j+1);
+        return 1;
+    }
+}
+```
+
 ### 133. Clone Graph
 
 **Description**
