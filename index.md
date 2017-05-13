@@ -2,6 +2,74 @@
 
 # Pocket Gems
 
+### Ternary Expression to Binary Tree
+
+**Description**
+Convert a ternary expression to a binary tree.
+Say:
+a?b:c to
+```
+  a
+ /  \
+b   c
+```
+a?b?c:d:e to
+```
+
+     a
+    / \
+   b   e
+  / \
+ c   d
+```
+
+**Ideas**
+
+1. Each time we scan two characters, 
+2. the first character is either ? or :, 
+3. the second character holds the value of the tree node. 
+4. When we see ?, we add the new node to left.
+5. When we see :, we need to find out the ancestor node that doesn't have a right node, and make the new node as its right child.
+
+**Tag:** stack POCKET GEMS
+
+```
+public class Solution{
+	public TreeNode convert(char[] expr) {
+	  if (expr.length == 0) {
+	    return null;
+	  }
+
+	  TreeNode root = new TreeNode(expr[0]);
+
+	  Stack<TreeNode> stack = new Stack<>();
+	  
+	  stack.push(root);
+
+	  for (int i = 1; i < expr.length; i += 2) {
+	    TreeNode node = new TreeNode(expr[i + 1]);
+
+	    if (expr[i] == '?') {
+	      stack.peek().left = node;
+	    }
+
+	    if (expr[i] == ':') {
+	      stack.pop();
+	      while (stack.peek().right != null) {
+		stack.pop();
+	      }
+	      stack.peek().right = node;
+	    }
+
+	    stack.push(node);
+	  }
+
+	  return root;
+	}
+}
+```
+
+
 ### NAN Top View of Binary Tree 变种 of 314. Binary Tree Vertical Order Traversal
 
 **Description**
