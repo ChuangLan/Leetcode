@@ -4,6 +4,40 @@
 ## TODO: 210 (topological sort)
 
 
+### 152. Maximum Product Subarray
+
+**Description**
+Find the contiguous subarray within an array (containing at least one number) which has the largest product.
+
+For example, given the array [2,3,-2,4],
+the contiguous subarray [2,3] has the largest product = 6.
+**Ideas**
+
+1. Record the curtMax and curtMin as 2 Integers
+2. In each iteration, update the curtMax and curtMin, by comparing (preMax * num, preMin * num, num)
+3. Update the max if curtMax > max
+4. return max
+
+**Tag:** DP POCKET GEMS
+
+```
+public class Solution {
+    public int maxProduct(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        int curtPos = nums[0], curtNeg = nums[0];
+        int max = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            int prePos = curtPos, preNeg = curtNeg;
+            curtPos = Math.max(Math.max(prePos*nums[i], preNeg*nums[i]), nums[i]);
+            curtNeg = Math.min(Math.min(prePos*nums[i], preNeg*nums[i]), nums[i]);
+            max = Math.max(max, curtPos);
+        }
+        return max;
+    }
+}
+```
+
+
 ### 285. Inorder Successor in BST
 
 **Description**
