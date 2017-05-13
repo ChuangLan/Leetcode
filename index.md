@@ -1,6 +1,8 @@
 [Edit raw](https://github.com/ChuangLan/Leetcode/edit/master/index.md)
 
 # Pocket Gems
+## TODO: 210 (topological sort)
+
 
 ### 285. Inorder Successor in BST
 
@@ -88,7 +90,8 @@ public class Solution {
 ```
 
 
-### **210. Course Schedule II**
+
+### 210. Course Schedule II
 
 **Description**
 There are a total of n courses you have to take, labeled from 0 to n - 1.
