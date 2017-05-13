@@ -2,7 +2,128 @@
 
 # Pocket Gems
 
-### Ternary Expression to Binary Tree
+### 239. Sliding Window Maximum
+
+**Description**
+Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+
+For example,
+Given nums = [1,3,-1,-3,5,3,6,7], and k = 3.
+```
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+```
+Therefore, return the max sliding window as [3,3,5,5,6,7].
+
+**Ideas**
+
+1. Use a deque to store the maximums
+2. The first one in deque is the curt max
+3. Check if the first one expires.
+4. 从队尾开始，把比当前小的都poll出来
+5. 把当前加进去
+6. 把队首计入result
+
+**Tag:** deque POCKET GEMS
+
+```
+public class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if(nums == null || nums.length == 0 || k <= 0) return new int[0];
+        int[] res = new int[nums.length - k + 1];
+        Deque<Integer> deque = new LinkedList<>();
+        for(int i = 0; i < nums.length; i++){
+            if(deque.peekFirst() != null && deque.peekFirst() <= i - k) deque.pollFirst();
+            while(deque.peekLast() != null && nums[deque.peekLast()] < nums[i]) deque.pollLast();
+            deque.offerLast(i);
+            if(i + 1 >= k) res[i + 1 - k] = nums[deque.peekFirst()];
+        }
+        return res;
+    }
+}
+```
+
+
+### 210. Course Schedule II
+
+**Description**
+There are a total of n courses you have to take, labeled from 0 to n - 1.
+
+Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+
+Given the total number of courses and a list of prerequisite pairs, return the ordering of courses you should take to finish all courses.
+
+There may be multiple correct orders, you just need to return one of them. If it is impossible to finish all courses, return an empty array.
+
+For example:
+```
+2, [[1,0]]
+```
+There are a total of 2 courses to take. To take course 1 you should have finished course 0. So the correct course order is [0,1]
+```
+4, [[1,0],[2,0],[3,1],[3,2]]
+```
+There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is [0,1,2,3]. Another correct ordering is[0,2,1,3].
+
+**Ideas**
+
+1. Init graph with arraylist
+2. Add neighbors to the list
+3. Topologically sort by dfs
+
+**Tag:** stack POCKET GEMS
+
+```
+public class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int n = numCourses;
+        List[] graph = new List[n];
+        // init the graph
+        for(int i = 0; i < n; i++) graph[i] = new ArrayList<Integer>();
+        // fill the graph with courses
+        for(int i = 0; i < prerequisites.length; i++){
+            int node = prerequisites[i][1], neighbor = prerequisites[i][0];
+            graph[node].add(neighbor);
+        }
+        // external visit set
+        boolean[] visit = new boolean[n];
+        // dfs visit set
+        boolean[] temp = new boolean[n];
+        int[] res = new int[n];
+        // topologically sort by dfs
+        int idx = n - 1;
+        for(int i = 0; i < n; i++) if(!visit[i]) idx = dfs(graph, res, visit, temp, idx, i);
+        // idx == -2 means this hasCycle
+        if(idx == -2) return new int[0];
+        return res;
+    }
+    
+    private int dfs(List[] graph, int[] res, boolean[] visit, boolean[] temp, int idx, int node){
+        if(idx == -2 || temp[node]) return -2;
+        if(visit[node]) return idx;
+        visit[node] = true;
+        temp[node] = true;
+        List<Integer> neighbors = graph[node];
+        for(Integer neighbor : neighbors){
+            idx = dfs(graph, res, visit, temp, idx, neighbor);
+            if(idx == -2) return idx;
+        }
+        temp[node] = false;
+        res[idx] = node;
+        return idx - 1;
+    }
+}
+```
+
+
+
+### NAN Ternary Expression to Binary Tree
 
 **Description**
 Convert a ternary expression to a binary tree.
