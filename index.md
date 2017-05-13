@@ -3,6 +3,57 @@
 # Pocket Gems
 ## TODO: 210 (topological sort)
 
+### 5. Longest Palindromic Substring
+
+**Description**
+Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+Example:
+```
+Input: "babad"
+
+Output: "bab"
+
+Note: "aba" is also a valid answer.
+```
+Example:
+```
+Input: "cbbd"
+
+Output: "bb"
+```
+**Ideas**
+
+1. At each position, iterate double ways both in odd and even
+2. Record the max len
+
+**Tag:** DP POCKET GEMS
+
+```
+public class Solution {
+    public String longestPalindrome(String s) {
+        if(s == null || s.isEmpty()) return "";
+        int start = 0, len = 1;
+        for(int i = 0; i < s.length(); i++){
+            // odd
+            int j = 1;
+            while (i-j >= 0 && i+j < s.length() && s.charAt(i-j) == s.charAt(i+j)) j++;
+            if(2*(j-1)+1 > len){
+                start = i-(j-1);
+                len = 2*(j-1)+1;
+            }
+            //even
+            j = 1;
+            while(i-j+1 >= 0 && i+j < s.length() && s.charAt(i-j+1) == s.charAt(i+j)) j++;
+            if(2*(j-1) > len){
+                start = i-(j-1)+1;
+                len = 2*(j-1);
+            }
+        }
+        return s.substring(start, start + len);
+    }  
+}
+```
+
 
 ### 152. Maximum Product Subarray
 
