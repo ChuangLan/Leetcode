@@ -2,6 +2,44 @@
 
 # Pocket Gems
 
+### 285. Inorder Successor in BST
+
+**Description**
+Given a binary search tree and a node in it, find the in-order successor of that node in the BST.
+
+Note: If the given node has no in-order successor in the tree, return null.
+
+**Ideas**
+
+1. 如果root.val > p.val，说明next在root左边或自己
+2. 于是以root.left为root，找结果。如果null，自己就是下一个，如果有值，就返回那个
+3. 如果root.val <= p.val，说明next在root右边
+
+**Tag:** dfs recursion POCKET GEMS
+
+```
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if(root == null || p == null) return null;
+        if(p.val < root.val){
+            TreeNode left = inorderSuccessor(root.left, p);
+            return left == null ? root : left;
+        }
+        return inorderSuccessor(root.right, p);
+    }
+}
+```
+
+
 ### 239. Sliding Window Maximum
 
 **Description**
