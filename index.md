@@ -3,6 +3,26 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### NAN. Shortest Manhattan distance
+
+**Description**
+I have a grid with certain intersections marked. I'd like to find the intersection that is closest to all the marked intersections. That is, I need to find a point such that the sum of distances from all points is minimum.
+
+有一个网格。在这个网格上有若干个人，如何在
+此网格上找出一个约会地点，使其到所有人的距离之和最短。
+
+**Ideas**
+1. Image we find a position on the 1D line
+2. The result would always be the median of all these elements (a segment when there're two of them)
+3. So for the manhattan distance, you can do it independently
+4. Find the two median and combine them together. 
+**Tag:** sort POCKET GEMS
+
+```
+code 略
+```
+
+
 ### 297. Serialize and Deserialize Binary Tree
 
 **Description**
