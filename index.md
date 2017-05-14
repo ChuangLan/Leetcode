@@ -16,6 +16,7 @@ I have a grid with certain intersections marked. I'd like to find the intersecti
 2. The result would always be the median of all these elements (a segment when there're two of them)
 3. So for the manhattan distance, you can do it independently
 4. Find the two median and combine them together. 
+
 **Tag:** sort POCKET GEMS
 
 ```
