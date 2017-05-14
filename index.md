@@ -6,6 +6,7 @@
 ### NAN. JSON parse to DB
 
 **Description**
+
 json格式
 [
 {type:"session", data:{player_id:89757, session_id:66055, name:"ergou", date:"2016-1-1HHMMSS"}},
@@ -40,6 +41,7 @@ arg1 就是上面的JSON，是一堆events。Config是另一个类型也是需�
 **Ideas**
 1. Map dataMap = eventMap.get("data").getAsMap();
 2. Use Config class to get method
+
 **Tag:** sort POCKET GEMS
 
 ```
