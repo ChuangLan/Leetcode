@@ -3,6 +3,69 @@
 # Pocket Gems
 ## TODO: 210 (topological sort)
 
+### 140. Word Break II
+
+**Description**
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, add spaces in s to construct a sentence where each word is a valid dictionary word. You may assume the dictionary does not contain duplicate words.
+
+Return all such possible sentences.
+
+For example, given
+s = "catsanddog",
+dict = ["cat", "cats", "and", "sand", "dog"].
+
+A solution is ["cats and dog", "cat sand dog"].
+
+**Ideas**
+
+1. DP, use 2D boolean array to record whether dp[start][end] is valid
+2. dp[i][i] determines that from i to end is valid
+3. After fill with the 2D array, check each (start,end) recursively. 
+4. Since the previous would only be valid if the leading is valid, so we can do the dfs safely.
+5. Build the string with spaces. When the end reaches the length of string, return
+
+**Tag:** DP, DFS POCKET GEMS
+
+```
+public class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        List<String> res = new ArrayList<>();
+        if(s == null || wordDict == null || wordDict.size() == 0) return res;
+        int ls = s.length();
+        boolean[][] dp = new boolean[ls + 1][ls + 1];
+        // init boolean matrix
+        // dp[i][i] means there is solution from i to end, no matter what it is
+        dp[ls][ls] = true;
+        for(int i = ls; i >= 0 ; i--){
+            for(String word : wordDict){
+                int lw = word.length();
+                if(lw + i <= ls && word.equals(s.substring(i, i +lw))){
+                    dp[i][i+lw] = dp[i+lw][i+lw];
+                    if(dp[i+lw][i+lw]) dp[i][i] = true;
+                }
+            }
+        }
+        // go to each solution
+        recurse(s, res, "", dp, 0);
+        return res;
+    }
+    
+    private void recurse(String s, List<String> res, String temp, boolean[][] dp, int start){
+        int ls = dp.length - 1;
+        for(int end = start + 1; end <= ls; end++){
+            if(dp[start][end]) {
+                if(end == ls){
+                    res.add(temp + s.substring(start, end));
+                    return;
+                }
+                recurse(s, res, temp+s.substring(start, end)+" ", dp, end);
+            }
+        }
+    }
+}
+```
+
+
 ### 5. Longest Palindromic Substring
 
 **Description**
