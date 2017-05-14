@@ -3,6 +3,53 @@
 # Pocket Gems
 ## TODO: 210 (topological sort)
 
+### NAN String implementation
+
+**Description**
+Design a string class , with implementation of charAt() and substring(b,e), with substring()
+requires O(1) time and O(1) space complexity
+Followup:
+A new method setCharat(index, char) is added, a substring must keep the changes of parrent
+string that are made before its creation, but both the parrent string and the substring will not
+affect each other after the creation of the substring, requires O(1) space complexity
+
+**Ideas**
+
+1. The value (charArray) doesn't change.
+2. Use offest and count (start and length) to define the substring
+3. Because String is immutable, you don't need to spare more space for it.
+
+Followups:
+1. 
+
+**Tag:** String POCKET GEMS
+
+```
+//JDK 6
+String(int offset, int count, char value[]) {
+	this.value = value;
+	this.offset = offset;
+	this.count = count;
+}
+ 
+public String substring(int beginIndex, int endIndex) {
+	//check boundary
+	return  new String(offset + beginIndex, endIndex - beginIndex, value);
+}
+//JDK 7
+public String(char value[], int offset, int count) {
+	//check boundary
+	this.value = Arrays.copyOfRange(value, offset, offset + count);
+}
+ 
+public String substring(int beginIndex, int endIndex) {
+	//check boundary
+	int subLen = endIndex - beginIndex;
+	return new String(value, beginIndex, subLen);
+}
+```
+
+
 ### 140. Word Break II
 
 **Description**
