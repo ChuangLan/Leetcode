@@ -3,6 +3,53 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### NAN. Find good number
+
+**Description**
+一个range(int a, int b) 里面找到good number.
+good number的定义是，所有组成它的prime factor的个数是个prime number. 8（） d( |1 i, m! ]& |'
+V& X:
+比如：10 = 2 * 5， 是两个prime number，所以他是good number. 30 = 2*3*5 三个prime num
+，也是good number 但是7 = 7 不是，因为1不是prime number个
+
+**Ideas**
+
+1. First call countPrime() to cal the boolean array for isPrime()
+2. Then use this boolean array to record the count of each prime factor
+3. Then check isPrime(count);
+
+**Tag:** prime, math POCKET GEMS
+
+```
+public class Solution {
+    public boolean isGoodNumber(int n) {
+        int count = 0;
+        boolean[] isPrime = new boolean[n+1];
+        for(int i = 2; i <= n; i++){
+            isPrime[i] = true;
+        }
+		// build the isPrime set
+        for(int i = 2; i*i <= n; i++){
+            if(isPrime[i]){
+                for(int j = i*i; j <= n; j+=i){
+                    isPrime[j] = false;
+                }
+            }
+        }
+        for(int i = 2; i <= n; i++){
+	    	if(isPrime[i]){
+	        	while(n % i == 0){
+					count++;
+					n /= i;
+				}
+	    	}
+		}
+		return isPrime[count];
+    }
+} 
+```
+
+
 ### 398. Random Pick Index
 
 **Description**
