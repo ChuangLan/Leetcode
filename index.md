@@ -24,11 +24,9 @@ solution.pick(1);
 ```
 **Ideas**
 
-1. DP, use 2D boolean array to record whether dp[start][end] is valid
-2. dp[i][i] determines that from i to end is valid
-3. After fill with the 2D array, check each (start,end) recursively. 
-4. Since the previous would only be valid if the leading is valid, so we can do the dfs safely.
-5. Build the string with spaces. When the end reaches the length of string, return
+1. Each time there is a prob of (1/k) to update the result, and 1-(1/k) to remain.
+2. k is index + 1, or say the times we iterate
+3. The final prob is 1/n for each
 
 **Tag:** Reservior Sampling POCKET GEMS
 
