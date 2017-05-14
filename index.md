@@ -3,6 +3,61 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### 4. Median of Two Sorted Arrays
+
+**Description**
+
+There are two sorted arrays nums1 and nums2 of size m and n respectively.
+
+Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+Example 1:
+```
+nums1 = [1, 3]
+nums2 = [2]
+
+The median is 2.0
+```
+Example 2:
+```
+nums1 = [1, 2]
+nums2 = [3, 4]
+
+The median is (2 + 3)/2 = 2.5 
+```
+
+**Ideas**
+1. Find median in two sorted array means find the kth number in two sorted array, where k is (m+n)/2 (or avg);
+2. Do binary search: since each time we can discard half of the array:
+3. Get the k/2th point of each array, if one is small, means that the segment before this should be discarded, as well as the segment after that
+4. Remember to use k = 1 as start to protect from dead loop with no offset each recursion
+5. Always remember to check the bound when cal the median in each recursion
+
+**Tag:** binary search POCKET GEMS
+
+```
+public class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if(nums1 == null || nums2 == null) return -1;
+        int m = nums1.length, n = nums2.length;
+        int left = (m + n + 1) >> 1;
+        int right = (m + n + 2) >> 1;
+        return 0.5 * (getKth(nums1, 0, nums2, 0, left) + getKth(nums1, 0, nums2, 0, right));
+    }
+    
+    private int getKth(int[] nums1, int s1, int[] nums2, int s2, int k){
+        if(s1 > nums1.length-1) return nums2[s2 + k - 1];
+        if(s2 > nums2.length-1) return nums1[s1 + k - 1];
+        if(k == 1) return Math.min(nums1[s1], nums2[s2]); // important not k == 0: to protect from no offset
+        int m1 = (s1 + k/2 - 1 < nums1.length) ? nums1[s1 + k/2 - 1] : Integer.MAX_VALUE;
+        int m2 = (s2 + k/2 - 1 < nums2.length) ? nums2[s2 + k/2 - 1] : Integer.MAX_VALUE;
+        if(m1 < m2) return getKth(nums1, s1+k/2, nums2, s2, k-k/2);
+        return getKth(nums1, s1, nums2, s2+k/2, k-k/2);
+    }
+}
+```
+
+
 ### NAN. JSON parse to DB
 
 **Description**
