@@ -1,7 +1,69 @@
 [Edit raw](https://github.com/ChuangLan/Leetcode/edit/master/index.md)
 
 # Pocket Gems
-## TODO: 210 (topological sort)
+## TODO: 210 (topological sort), NAN String setCharAt()
+
+### 398. Random Pick Index
+
+**Description**
+Given an array of integers with possible duplicates, randomly output the index of a given target number. You can assume that the given target number must exist in the array.
+
+Note:
+The array size can be very large. Solution that uses too much extra space will not pass the judge.
+
+Example:
+```
+int[] nums = new int[] {1,2,3,3,3};
+Solution solution = new Solution(nums);
+
+// pick(3) should return either index 2, 3, or 4 randomly. Each index should have equal probability of returning.
+solution.pick(3);
+
+// pick(1) should return 0. Since in the array only nums[0] is equal to 1.
+solution.pick(1);
+```
+**Ideas**
+
+1. DP, use 2D boolean array to record whether dp[start][end] is valid
+2. dp[i][i] determines that from i to end is valid
+3. After fill with the 2D array, check each (start,end) recursively. 
+4. Since the previous would only be valid if the leading is valid, so we can do the dfs safely.
+5. Build the string with spaces. When the end reaches the length of string, return
+
+**Tag:** Reservior Sampling POCKET GEMS
+
+```
+public class Solution {
+
+    int[] nums;
+    public Solution(int[] nums) {
+        // Arrays.sort(nums);
+        this.nums = nums;
+    }
+    
+    public int pick(int target) {
+        //O(n) work solution
+        int k = 1;
+        int res = -1;
+        for(int i = 0; i < nums.length; i++){
+            double r = Math.random();
+            if(target == nums[i]){
+                if(r <= 1.0/k) res = i;    
+                k++;
+            }
+        }
+        return res;
+        
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(nums);
+ * int param_1 = obj.pick(target);
+ */
+ ```
+
 
 ### NAN String implementation
 
