@@ -12,7 +12,7 @@ Design an algorithm to serialize and deserialize a binary tree. There is no rest
 
 For example, you may serialize the following tree
 ```
- 	1
+    1
    / \
   2   3
      / \
