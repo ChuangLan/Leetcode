@@ -3,6 +3,58 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### 39. Combination Sum (数组没有重复，但可以使用多次）
+
+**Description**
+
+Given a set of candidate numbers (C) (without duplicates) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+
+The same repeated number may be chosen from C unlimited number of times.
+
+Note:
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+For example, given candidate set [2, 3, 6, 7] and target 7, 
+A solution set is: 
+```
+[
+  [7],
+  [2, 2, 3]
+]
+```
+
+**Ideas**
+1. Backtracking
+2. Remember, when target <= 0 is the exit, not just target == 0
+3. The start of for loop is idx itself
+
+**Tag:** backtracking POCKET GEMS
+
+```
+public class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        // Arrays.sort(candidates); // no need to sort
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        backtracking(res, temp, candidates, 0, target);
+        return res;
+    }
+    
+    private void backtracking(List<List<Integer>> res, List<Integer> temp, int[] candidates, int idx, int target){
+        if(target <= 0){
+            if(target == 0 && temp.size() != 0) res.add(new ArrayList<Integer>(temp));
+            return;
+        }
+        for(int i = idx; i < candidates.length; i++){
+            temp.add(candidates[i]);
+            backtracking(res, temp, candidates, i, target - candidates[i]);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
+```
+
+
 ### 41. First Missing Positive
 
 **Description**
