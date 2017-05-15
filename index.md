@@ -3,6 +3,70 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### 287. Find the Duplicate Number
+
+**Description**
+
+Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
+Note:
+You must not modify the array (assume the array is read only).
+You must use only constant, O(1) extra space.
+Your runtime complexity should be less than O(n2).
+There is only one duplicate number in the array, but it could be repeated more than once.
+
+**Ideas**
+1. 0 -> 2 -> 1 -> 3 -> 1 -> 4;
+2. This is just like to find a cycle on the linkedList;
+3. 0 would always be a valid head, it never goes back to 0 anyway. 
+
+**Tag:** two pointers binary search POCKET GEMS
+
+```
+public class Solution {
+    public int findDuplicate(int[] nums) {
+        // O(1) space and readOnly: No sort
+        // Not only once: no xor
+        // the number is from 1 to n which means that nums[0] will be a safe entry
+        // since nums[0] != 0 and it will go next whatever
+        // then after that it will the same question as cycle on linkedList
+        
+        //Binary search
+        // if(nums == null || nums.length < 2) return -1;
+        // int start = 1;
+        // int end = nums.length - 1;
+        // while(start < end){
+        //     int mid = start + ((end - start) >> 1);
+        //     int count = 0;
+        //     for(int num: nums){
+        //         if(num <= mid) count++;
+        //     }
+        //     if(count > mid) end = mid;
+        //     else start = mid + 1;
+        // }
+        // return start;
+        
+        // Two Pointers
+        
+        if(nums == null || nums.length < 2){
+            return -1;
+        } 
+        int slow = nums[0];
+        int fast = nums[nums[0]];
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+        fast = 0;
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
+}
+
+```
+
 ### 4. Median of Two Sorted Arrays
 
 **Description**
