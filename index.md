@@ -3,6 +3,63 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### 40. Combination Sum II (数组有重复，但只可以使用多次）
+
+**Description**
+
+Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+
+Each number in C may only be used once in the combination.
+
+Note:
+All numbers (including target) will be positive integers.
+The solution set must not contain duplicate combinations.
+For example, given candidate set [10, 1, 2, 7, 6, 1, 5] and target 8, 
+A solution set is: 
+```
+[
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
+]
+
+```
+
+**Ideas**
+1. Sort first
+2. Backtracking with for loop
+3. The start is idx+1, since no multi-use
+4. Remember to offset the duplicates if the first one not used
+
+**Tag:** backtracking POCKET GEMS
+
+```
+public class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> res = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        backtracking(res, temp, candidates, -1, target);
+        return res;
+    }
+    
+    private void backtracking(List<List<Integer>> res, List<Integer> temp, int[] candidates, int idx, int target){
+        if(target <= 0){
+            if(target == 0 && temp.size() != 0) res.add(new ArrayList<Integer>(temp));
+            return;
+        }
+        for(int i = idx+1; i < candidates.length; i++){
+            temp.add(candidates[i]);
+            backtracking(res, temp, candidates, i, target - candidates[i]);
+            temp.remove(temp.size()-1);
+            while(i+1 < candidates.length && candidates[i] == candidates[i+1]) i++;
+        }
+    }
+}
+
+```
+
 ### 39. Combination Sum (数组没有重复，但可以使用多次）
 
 **Description**
@@ -27,6 +84,7 @@ A solution set is:
 1. Backtracking
 2. Remember, when target <= 0 is the exit, not just target == 0
 3. The start of for loop is idx itself
+4. No need to sort
 
 **Tag:** backtracking POCKET GEMS
 
