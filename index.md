@@ -627,14 +627,14 @@ public class Solution {
             }
         }
         for(int i = 2; i <= n; i++){
-	    	if(isPrime[i]){
-	        	while(n % i == 0){
-					count++;
-					n /= i;
-				}
-	    	}
+	    if(isPrime[i]){
+	        while(n % i == 0){
+		    count++;
+		    n /= i;
 		}
-		return isPrime[count];
+	    }
+	}
+	return isPrime[count];
     }
 } 
 ```
@@ -1173,7 +1173,7 @@ public class Solution{
         	TreeNode node = queue.poll();
         	int col = cols.poll();
         	if(array[col] == null) array[col] = node.val;
-        	if(node.left != null){
+            if(node.left != null){
                 queue.offer(node.left);
                 cols.offer(col - 1);
             }
