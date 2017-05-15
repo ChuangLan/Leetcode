@@ -3,6 +3,68 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### 377. Combination Sum IV (unique array，多次使用，返回combination个数)
+
+**Description**
+
+Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+
+Example:
+
+```
+nums = [1, 2, 3]
+target = 4
+
+The possible combination ways are:
+(1, 1, 1, 1)
+(1, 1, 2)
+(1, 2, 1)
+(1, 3)
+(2, 1, 1)
+(2, 2)
+(3, 1)
+
+Note that different sequences are counted as different combinations.
+
+Therefore the output is 7.
+```
+**Ideas**
+1. DP, int array define the number from 1 to target
+2. dp[i] = dp[i-num] num is each one in nums array
+
+**Tag:** DP POCKET GEMS
+
+```
+public class Solution {
+    public int combinationSum4(int[] nums, int target) {
+        //Dp
+        //bottom up
+        if(target < 1) return 0;
+        int[] dp = new int[target+1];
+        dp[0] = 1;
+        for(int t = 1; t <= target; t++){
+            for(int num: nums){
+                if(num > t) continue;
+                dp[t] += dp[t-num];
+            }
+        }
+        return dp[target];
+    }
+    
+    // public int combinationSum4(int[] nums, int target) {
+    //     //Resursion version
+    //     //time limit exceeded
+    //     int sum = 0;
+    //     for(int num: nums){
+    //         if(target - num > 0) sum += combinationSum4(nums, target - num);
+    //         else if(target - num == 0) sum += 1;
+    //     }
+    //     return sum;
+    // }
+}
+
+```
+
 ### 216. Combination Sum III (k个数，1-9，和为n)
 
 **Description**
