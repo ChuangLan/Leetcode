@@ -3,6 +3,58 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### 216. Combination Sum III (k个数，1-9，和为n)
+
+**Description**
+
+Find all possible combinations of k numbers that add up to a number n, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.
+
+
+Example 1:
+
+Input: k = 3, n = 7
+
+Output:[[1,2,4]]
+
+Example 2:
+
+Input: k = 3, n = 9
+
+Output:
+
+[[1,2,6], [1,3,5], [2,3,4]]
+
+**Ideas**
+1. Add number within ascending sequence
+2. 9 + 8 + 7 + ... 9-k+1 is the largest one, if n > max, just return;
+
+**Tag:** backtracking POCKET GEMS
+
+```
+public class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> res = new ArrayList<>();
+        helper(res, new ArrayList<Integer>(), k, n);
+        return res;
+    }
+    private void helper(List<List<Integer>> res, List<Integer> curt, int k, int n){
+        if(19*k - k*k < 2*n) return;
+        int last = (curt.isEmpty())? 0: curt.get(curt.size()-1);
+        if(k == 0) {
+            res.add(new ArrayList<Integer>(curt));
+            return;
+        }
+        for(int i = last+1; i <= 9 && ((2*i+k-1)*k <= 2*n); i++){
+            curt.add(i);
+            helper(res, curt, k-1, n-i);
+            curt.remove(curt.size()-1);
+        }
+    }
+}
+
+```
+
+
 ### 40. Combination Sum II (数组有重复，但只可以使用多次）
 
 **Description**
