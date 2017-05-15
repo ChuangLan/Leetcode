@@ -3,6 +3,69 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### 75. Sort Colors
+
+**Description**
+
+Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+
+Note:
+You are not suppose to use the library's sort function for this problem.
+
+**Ideas**
+1. Use left and right pointers to record the position of next 0 and 2
+2. Iterate the loop, when meet 0, swap with the left; meet 2, swap with the right; meet 1, do nothing
+3. Make sure that after each time you have swapped the numbers, do i-- to check the curt again
+
+**Tag:** two pointers POCKET GEMS
+
+```
+public class Solution {
+    public void sortColors(int[] nums) {
+        // int[] colors = new int[3];
+        // for(int num : nums) colors[num]++;
+        // for(int i = 0; i < nums.length; i++){
+        //     if(i < colors[0]) nums[i] = 0;
+        //     else if(i < colors[0] + colors[1]) nums[i] = 1;
+        //     else nums[i] = 2;
+        // }
+        // 0, 3
+        int left = 0, right = nums.length - 1;
+        for(int i = 0; i <= right; i++){
+            if(nums[i] == 2 && right != i){
+                int swap = nums[i];
+                nums[i--] = nums[right];
+                nums[right--] = swap;
+            }
+            else if(nums[i] == 0 && left != i){
+                int swap = nums[i];
+                nums[i--] = nums[left];
+                nums[left++] = swap;
+            }
+        }
+        // if(nums[left] == 0) left++;
+        // if(nums[right] == 3) right--;
+        // // 1, 2
+        // for(int i = left; i <= right; i++){
+        //     if(nums[i] == 2 && right != i){
+        //         int swap = nums[i];
+        //         nums[i--] = nums[right];
+        //         nums[right--] = swap;
+        //     }
+        //     else if(nums[i] == 1 && left != i){
+        //         int swap = nums[i];
+        //         nums[i--] = nums[left];
+        //         nums[left++] = swap;
+        //     }
+        // }
+    }
+}
+
+```
+
+
 ### 287. Find the Duplicate Number
 
 **Description**
