@@ -3,6 +3,16 @@
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
+### NAN. Talk: HashMap collision
+
+Hash tables deal with collisions in one of two ways.
+
+Option 1: By having each bucket contain a linked list of elements that are hashed to that bucket. This is why a bad hash function can make lookups in hash tables very slow. 形成单链表
+
+Option 2: If the hash table entries are all full then the hash table can increase the number of buckets that it has and then redistribute all the elements in the table. The hash function returns an integer and the hash table has to take the result of the hash function and mod it against the size of the table that way it can be sure it will get to bucket. So by increasing the size, it will rehash and run the modulo calculations which if you are lucky might send the objects to different buckets. 扩容重新计算
+
+Java uses both option 1 and 2 in its hash table implementations.
+
 ### 377. Combination Sum IV (unique array，多次使用，返回combination个数)
 
 **Description**
