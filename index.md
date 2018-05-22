@@ -1,5 +1,25 @@
 [Edit raw](https://github.com/ChuangLan/Leetcode/edit/master/index.md)
 
+# Google
+### Talk: Binary Indexed Tree
+
+[Binary Indexed Tree](https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/)
+
+Get the last digit 1 in a binary integer. (Isolating the last digit)
+
+NOTE: Instead of “the last non-zero digit,” it will write only “the last digit.”
+
+There are times when we need to get just the last digit from a binary number, so we need an efficient way to do that. Let num be the integer whose last digit we want to isolate. In binary notation num can be represented as a1b, where a represents binary digits before the last digit and b represents zeroes after the last digit.
+
+Integer -num is equal to (a1b)¯ + 1 = a¯0b¯ + 1. b consists of all zeroes, so b¯ consists of all ones. Finally we have
+
+-num = (a1b)¯ + 1 = a¯0b¯ + 1 = a¯0(0…0)¯ + 1 = a¯0(1…1) + 1 = a¯1(0…0) = a¯1b.
+Now, we can easily isolate the last digit, using bitwise operator AND (in C++, Java it is &) with num and -num:           
+      a1b
+&    a¯1b
+    ——————–
+= (0…0)1(0…0)
+
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
