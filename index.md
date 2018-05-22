@@ -15,11 +15,12 @@ Integer -num is equal to (a1b)¯ + 1 = a¯0b¯ + 1. b consists of all zeroes, so
 
 -num = (a1b)¯ + 1 = a¯0b¯ + 1 = a¯0(0…0)¯ + 1 = a¯0(1…1) + 1 = a¯1(0…0) = a¯1b.
 Now, we can easily isolate the last digit, using bitwise operator AND (in C++, Java it is &) with num and -num:           
+```
       a1b
 &    a¯1b
     ——————–
 = (0…0)1(0…0)
-
+```
 # Pocket Gems
 ## TODO: 210 (topological sort), NAN String setCharAt()
 
